@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html style="height: 100%;" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="#">
+    <title>Password Storage</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="./javascript-builded_ts/script.js" type="module" defer></script>
+    <script id="Dropbox" src="./Dropbox-sdk.js"></script>
+  </head>
+  <body style="height: 100%;margin: 0;">
+    <header>
+      <div class="header" id="headerDiv">
+        <button id="menuButton">
+          <img src="https://cdn.glitch.com/5d8ab5d3-5560-4969-892d-489301146ce2%2Fmenu-rounded-solid.png?v=1619399841263" width="24" height="24">
+        </button>
+        <div id="searchDiv" >
+          <input id="searchInput">
+        <button id="searchButton"><img src="https://cdn.glitch.com/5d8ab5d3-5560-4969-892d-489301146ce2%2Fsearch.png?v=1619114693508" width="16" height="16"></button>
+        </div>
+         <canvas id="syncDot" width="16" height="16"></canvas> 
+      </div>
+  
+      
+    </header>
+      <div id="passArea">
+          <div id="passPopUp">
+            <button id="popupButton">X</button>
+            <div id="passTitleDiv">
+              <div id="passImgDiv">
+                <img id="passImg" width="40px">
+              </div>
+              <input id="passName" class="passInput">
+            </div>
+            <div id="passInputDiv">
+              <input id="passUrl" class="passInput">
+              <input id="passAccount" class="passInput">
+              <input id="passPass" class="passInput">
+            </div>
+            <div id="passSaveDiv">
+              <button id="passSaveButton">
+                Kaydet
+              </button>
+            </div>
+          </div>
+        <ul id="webList"></ul>
+        <div>
+          <button id="addButton" class="addButton"><img class="addButton" src="https://cdn.glitch.com/5d8ab5d3-5560-4969-892d-489301146ce2%2Fadd.png?v=1620829817100" width="40" height="40"></button>
+        </div>
+      </div>
+    <script src="https://button.glitch.me/button.js" defer></script>
+  </body>
+</html>
