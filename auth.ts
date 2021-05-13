@@ -1,5 +1,5 @@
-import {SyncDot} from "./dot.js";
-import {DataSystem} from "./data.js";
+import { SyncDot } from "./dot.js";
+import { DataSystem } from "./data.js";
 
 export class AuthSystem{
     private _dbxAuth: any;

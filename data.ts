@@ -1,5 +1,5 @@
-import {SyncDot} from "./dot.js";
-import {WebList} from "./weblist.js";
+import { SyncDot } from "./dot.js";
+import { WebList } from "./weblist.js";
 
 export class Website{
 	constructor(private _name: string, private _url:string, private _account: string, private _pass: string){};

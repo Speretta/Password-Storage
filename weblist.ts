@@ -129,6 +129,10 @@ export class WebList{
 }
 
 
+
+/*
+I need help here. Gets error when assigning image resource. An ugly sight.
+*/
 export async function checkImgAndSet(logo_link: string, logo: HTMLImageElement): Promise<void>{
 	return new Promise(resolve => {
 		let req = new XMLHttpRequest();

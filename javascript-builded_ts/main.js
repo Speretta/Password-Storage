@@ -34,11 +34,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var CLIENT_ID = "null";
+var CLIENT_ID = "ncss4bzotoyi4zm"; //This is my Dropbox Public App key. Please do not abuse this.
 var REDIRECT_URI = "http://localhost:8080";
 import { AuthSystem } from "./auth.js";
 import { Website } from "./data.js";
 var auth = new AuthSystem(CLIENT_ID, REDIRECT_URI);
+/*
+Enter "start" in the search field for the actual startup process.
+During the development process, the dom changes every time the code is changed,
+this causes repeated requests to the api, of course, this is bad.
+*/
 var start = function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -72,12 +77,12 @@ function click(event) {
         auth.dataSystem.weblist.openPopUp(new_site_id, new_site);
     }
     else if (event.target.id == "syncDot") {
-        if (confirm("Verilerinizi buluta yüklemek üzeresiniz, devam etmek için onaylayın.")) {
+        if (confirm("You are about to upload your data to the cloud, confirm to continue.")) {
             try {
                 auth.dataSystem.updateCloudFile();
             }
             catch (error) {
-                alert("Dropbox bulutuna bağlanılamadı: " + error);
+                alert("Could not connect to the Dropbox cloud: " + error);
             }
         }
     }
@@ -90,7 +95,7 @@ function searchFilter(e) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!(e.target.value == "başlat")) return [3 /*break*/, 2];
+                    if (!(e.target.value == "start")) return [3 /*break*/, 2];
                     return [4 /*yield*/, auth.getAuthUrl()];
                 case 1:
                     _a.sent();

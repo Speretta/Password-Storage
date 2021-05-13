@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./web",
+    "outDir": "./javascript-builded_ts",
     "target": "es5",
     "lib": [
         "es2015.promise",

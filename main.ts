@@ -1,4 +1,4 @@
-const CLIENT_ID = "null";
+const CLIENT_ID = "ncss4bzotoyi4zm"; //This is my Dropbox Public App key. Please do not abuse this.
 const REDIRECT_URI = "http://localhost:8080";
 
 import { AuthSystem } from "./auth.js";
@@ -6,6 +6,13 @@ import { checkImgAndSet } from "./weblist.js";
 import { Website } from "./data.js";
 
 var auth = new AuthSystem(CLIENT_ID, REDIRECT_URI);
+
+
+/*
+Enter "start" in the search field for the actual startup process. 
+During the development process, the dom changes every time the code is changed, 
+this causes repeated requests to the api, of course, this is bad.
+*/
 
 var start = async () => {
 	if (AuthSystem.getCode()) {
@@ -32,11 +39,11 @@ function click(event){
 		var new_site = new Website("New Website", "", "", "");
 		auth.dataSystem.weblist.openPopUp(new_site_id, new_site);
 	} else if (event.target.id =="syncDot"){
-		if (confirm("Verilerinizi buluta yüklemek üzeresiniz, devam etmek için onaylayın.")) {
+		if (confirm("You are about to upload your data to the cloud, confirm to continue.")) {
 			try {
 				auth.dataSystem.updateCloudFile();
 			}catch(error){
-				alert("Dropbox bulutuna bağlanılamadı: "+ error);
+				alert("Could not connect to the Dropbox cloud: " + error);
 			}
 			
 		}
@@ -49,7 +56,7 @@ document.getElementById("searchInput").addEventListener('input', searchFilter);
 async function searchFilter(e) {
 
 	//Debug için
-	if (e.target.value == "başlat") {
+	if (e.target.value == "start") {
 		await auth.getAuthUrl();
 	}
 	//Debug için

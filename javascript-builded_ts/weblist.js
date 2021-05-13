@@ -186,6 +186,9 @@ var WebList = /** @class */ (function () {
     return WebList;
 }());
 export { WebList };
+/*
+I need help here. Gets error when assigning image resource. An ugly sight.
+*/
 export function checkImgAndSet(logo_link, logo) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
