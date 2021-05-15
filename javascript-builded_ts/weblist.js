@@ -62,6 +62,27 @@ var WebsiteMenu = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(WebsiteMenu.prototype, "li", {
+        get: function () {
+            return this._li;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    WebsiteMenu.prototype.clearMe = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve) {
+                        _this._logo.remove();
+                        _this._label.remove();
+                        _this._div.remove();
+                        _this._li.remove();
+                        resolve();
+                    })];
+            });
+        });
+    };
     return WebsiteMenu;
 }());
 var WebList = /** @class */ (function () {
@@ -110,26 +131,53 @@ var WebList = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve) { return __awaiter(_this, void 0, void 0, function () {
-                        var li, div, logo, text, menu;
+                        var li, logoDiv, logo, nameDiv, name, account, settingDiv, settingDot, settingTrashButton, settingTrashImage, menu;
                         return __generator(this, function (_a) {
                             li = document.createElement("li");
-                            div = document.createElement("div");
+                            logoDiv = document.createElement("div");
                             logo = document.createElement("img");
-                            text = document.createElement("label");
-                            text.innerHTML = website.name;
-                            text.setAttribute("siteid", id);
-                            text.className += "logoText";
-                            div.className += "logoDiv";
-                            div.setAttribute('siteid', id);
-                            logo.className += "logo";
-                            logo.setAttribute('siteid', id);
-                            li.setAttribute('siteid', id);
+                            nameDiv = document.createElement("div");
+                            name = document.createElement("label");
+                            account = document.createElement("label");
+                            settingDiv = document.createElement("div");
+                            settingDot = document.createElement("img");
+                            settingTrashButton = document.createElement("button");
+                            settingTrashImage = document.createElement("img");
+                            logoDiv.classList.add("logoDiv");
+                            logo.classList.add("logo");
                             checkImgAndSet(website.url, logo); //Maybe await
+                            nameDiv.style.textOverflow = "ellipsis";
+                            nameDiv.style.overflow = "hidden";
+                            name.innerHTML = website.name;
+                            name.classList.add("menuName");
+                            account.innerHTML = website.account;
+                            account.classList.add("menuAccount");
+                            settingDiv.classList.add("menuSettingDiv");
+                            settingDiv.classList.add("menuSetting");
+                            settingDiv.id = "menuSettingDiv" + this._list.length;
+                            settingDot.src = "https://cdn.glitch.com/5d8ab5d3-5560-4969-892d-489301146ce2%2Fdot.png?v=1620997092665";
+                            settingDot.classList.add("menuDot");
+                            settingDot.classList.add("menuSetting");
+                            settingDot.id = "menuDot" + this._list.length;
+                            settingTrashButton.style.display = "none";
+                            settingTrashButton.id = "menuSettingTrash" + this._list.length;
+                            settingTrashButton.classList.add("menuSetting");
+                            settingTrashButton.classList.add("menuSettingTrash");
+                            settingTrashImage.src = "https://cdn.glitch.com/5d8ab5d3-5560-4969-892d-489301146ce2%2Ftrash.png?v=1621001711425";
+                            settingTrashImage.classList.add("menuSettingTrash");
+                            settingTrashImage.classList.add("menuSetting");
                             WebList._ul.appendChild(li);
-                            li.appendChild(div);
-                            div.appendChild(logo);
-                            div.appendChild(text);
-                            menu = new WebsiteMenu(website.url, li, div, logo, text);
+                            li.appendChild(logoDiv);
+                            logoDiv.appendChild(logo);
+                            nameDiv.appendChild(name);
+                            nameDiv.appendChild(account);
+                            settingTrashButton.appendChild(settingTrashImage);
+                            settingDiv.appendChild(settingDot);
+                            settingDiv.appendChild(settingTrashButton);
+                            logoDiv.appendChild(settingDiv);
+                            logoDiv.appendChild(nameDiv);
+                            this.setIdChildElements(id, li);
+                            menu = new WebsiteMenu(website.url, li, logoDiv, logo, name);
                             this._list.push(menu);
                             resolve();
                             return [2 /*return*/];
@@ -159,7 +207,7 @@ var WebList = /** @class */ (function () {
     WebList.prototype.closPopUp = function () {
         this._pass_pop_up.style.display = "none";
     };
-    WebList.prototype.reloadMenu = function (id, website) {
+    WebList.prototype.reloadOrCreateMenu = function (id, website) {
         return __awaiter(this, void 0, void 0, function () {
             var old_website;
             return __generator(this, function (_a) {
@@ -179,8 +227,39 @@ var WebList = /** @class */ (function () {
             });
         });
     };
+    WebList.prototype.setIdChildElements = function (id, element) {
+        var child_elements = element.querySelectorAll("*");
+        for (var id2 in child_elements) {
+            if (typeof child_elements[id2] == "object") {
+                child_elements[id2].setAttribute("siteid", id);
+                if (child_elements[id2].id.includes("menuDot"))
+                    child_elements[id2].id = "menuDot" + id;
+                else if (child_elements[id2].id.includes("menuSettingTrash"))
+                    child_elements[id2].id = "menuSettingTrash" + id;
+                else if (child_elements[id2].id.includes("menuSettingDiv"))
+                    child_elements[id2].id = "menuSettingDiv" + id;
+            }
+        }
+    };
     WebList.prototype.deleteMenu = function (id) {
-        delete this._list[id];
+        return __awaiter(this, void 0, void 0, function () {
+            var k;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!this._list[id]) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this._list[id].clearMe()];
+                    case 1:
+                        _a.sent();
+                        this._list.splice(id, 1);
+                        for (k = id; k < this._list.length; k++) {
+                            this.setIdChildElements(k, this._list[k].li);
+                        }
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
+                }
+            });
+        });
     };
     WebList._ul = document.getElementById("webList");
     return WebList;

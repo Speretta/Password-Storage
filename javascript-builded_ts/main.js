@@ -59,24 +59,26 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
 }); };
 start();
 document.addEventListener("click", click);
+document.addEventListener("mouseover", mouseover);
 function click(event) {
-    var id = event.target.getAttribute("siteid");
-    if (event.target.hasAttribute("siteid") && event.target.id != "passSaveButton") {
+    var element = event.target;
+    var id = element.getAttribute("siteid");
+    if (element.hasAttribute("siteid") && element.id != "passSaveButton" && !element.classList.contains("menuSetting")) {
         var site = auth.dataSystem.websites[id];
         if (site)
             auth.dataSystem.weblist.openPopUp(id, site);
     }
-    else if (event.target.id == "passSaveButton") {
+    else if (element.id == "passSaveButton") {
         var website = auth.dataSystem.weblist.getPopUpWebsite();
         auth.dataSystem.setWebsiteData(id, website);
         auth.dataSystem.weblist.closPopUp();
     }
-    else if (event.target.classList.contains("addButton")) {
+    else if (element.classList.contains("addButton")) {
         var new_site_id = auth.dataSystem.websites.length;
         var new_site = new Website("New Website", "", "", "");
         auth.dataSystem.weblist.openPopUp(new_site_id, new_site);
     }
-    else if (event.target.id == "syncDot") {
+    else if (element.id == "syncDot") {
         if (confirm("You are about to upload your data to the cloud, confirm to continue.")) {
             try {
                 auth.dataSystem.updateCloudFile();
@@ -84,6 +86,32 @@ function click(event) {
             catch (error) {
                 alert("Could not connect to the Dropbox cloud: " + error);
             }
+        }
+    }
+    else if (element.classList.contains("menuSettingTrash")) {
+        auth.dataSystem.deleteWebsiteData(id);
+    }
+}
+var over_id = 0;
+function mouseover(event) {
+    var element = event.target;
+    if (over_id != element.id) {
+        if (document.getElementById("menuDot" + over_id)) {
+            document.getElementById("menuDot" + over_id).style.display = "none";
+            document.getElementById("menuSettingTrash" + over_id).style.display = "none";
+        }
+    }
+    over_id = element.getAttribute("siteid");
+    var dot = document.getElementById("menuDot" + over_id);
+    var trash = document.getElementById("menuSettingTrash" + over_id);
+    if (dot || trash) {
+        if (element.hasAttribute("siteid") && element.id != "passSaveButton" && !element.classList.contains("menuSetting")) {
+            dot.style.display = "block";
+            trash.style.display = "none";
+        }
+        else if (element.classList.contains("menuSetting")) {
+            dot.style.display = "none";
+            trash.style.display = "flex";
         }
     }
 }

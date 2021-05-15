@@ -88,9 +88,11 @@ var DataSystem = /** @class */ (function () {
         this._sync_dot = _sync_dot;
         this._weblist = new WebList();
         this._websites = [];
+        var website = new Website("Google", "www.google.com", "speretta@typescript.com", "ilovetypescript");
+        this._websites.push(website);
     }
     DataSystem.prototype.getWebsitesJSONString = function () {
-        return JSON.stringify(this._websites);
+        return JSON.stringify(this._websites, null, 2);
     };
     DataSystem.prototype.isAvailablePassFile = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -129,10 +131,11 @@ var DataSystem = /** @class */ (function () {
                             reader.readAsText(response.result.fileBlob);
                             reader.onload = function (e) {
                                 json = JSON.parse(reader.result);
-                                console.log(json);
                                 for (var id in json) {
-                                    var website = new Website(json[id].name, json[id].url, json[id].account, json[id].pass);
-                                    websites.push(website);
+                                    if (json[id]) {
+                                        var website = new Website(json[id].name, json[id].url, json[id].account, json[id].pass);
+                                        websites.push(website);
+                                    }
                                 }
                                 dot.color = "yellow";
                                 resolve(true);
@@ -211,6 +214,14 @@ var DataSystem = /** @class */ (function () {
             });
         });
     };
+    DataSystem.prototype.setWebsiteData = function (id, website) {
+        this._websites[id] = website;
+        this._weblist.reloadOrCreateMenu(id, website);
+    };
+    DataSystem.prototype.deleteWebsiteData = function (id) {
+        this._websites.splice(id, 1);
+        this._weblist.deleteMenu(id);
+    };
     Object.defineProperty(DataSystem.prototype, "websites", {
         get: function () {
             return this._websites;
@@ -225,10 +236,6 @@ var DataSystem = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    DataSystem.prototype.setWebsiteData = function (id, website) {
-        this._websites[id] = website;
-        this._weblist.reloadMenu(id, website);
-    };
     return DataSystem;
 }());
 export { DataSystem };
