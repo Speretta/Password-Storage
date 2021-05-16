@@ -4,6 +4,7 @@ const REDIRECT_URI = "http://localhost:8080";
 import { AuthSystem } from "./auth.js";
 import { checkImgAndSet } from "./weblist.js";
 import { Website } from "./data.js";
+import { b64DecodeUnicode } from "./crypto.js";
 
 var auth = new AuthSystem(CLIENT_ID, REDIRECT_URI);
 
@@ -13,13 +14,19 @@ Enter "start" in the search field for the actual startup process.
 During the development process, the dom changes every time the code is changed, 
 this causes repeated requests to the api, of course, this is bad.
 */
-
 var start = async () => {
-	if (AuthSystem.getCode()) {
-		await auth.connectAuth();
+	if (AuthSystem.getCode() == "false" || AuthSystem.getCode() == sessionStorage.getItem("codeAuth")) {
+		await auth.getAuthUrl();
 	}
+	await auth.connectAuth();
 }
-start();
+if (sessionStorage.getItem("not_hashed_password")) {
+	start();
+}else {
+	location.href = "login.html";
+}
+
+
 
 document.addEventListener("click", click);
 document.addEventListener("mouseover", mouseover);
@@ -83,13 +90,6 @@ var ul = document.getElementById("webList"); //Weblist elemanı burada tanımlan
 
 document.getElementById("searchInput").addEventListener('input', searchFilter);
 async function searchFilter(e) {
-
-	//Debug için
-	if (e.target.value == "start") {
-		await auth.getAuthUrl();
-	}
-	//Debug için
-
 	var li = ul.getElementsByTagName('li');
 	if (li.length > 0)
 		for (var id = 0; id < li.length; id++) {
@@ -103,4 +103,12 @@ async function searchFilter(e) {
 
 
 		}
+}
+
+
+
+function getCookie(cname: string): string {
+	var value = "; " + document.cookie;
+	var parts = value.split("; " + cname + "=");
+	if (parts.length == 2) return parts.pop().split(";").shift();
 }

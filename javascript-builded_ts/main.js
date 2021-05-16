@@ -48,16 +48,24 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                if (!AuthSystem.getCode()) return [3 /*break*/, 2];
-                return [4 /*yield*/, auth.connectAuth()];
+                if (!(AuthSystem.getCode() == "false" || AuthSystem.getCode() == sessionStorage.getItem("codeAuth"))) return [3 /*break*/, 2];
+                return [4 /*yield*/, auth.getAuthUrl()];
             case 1:
                 _a.sent();
                 _a.label = 2;
-            case 2: return [2 /*return*/];
+            case 2: return [4 /*yield*/, auth.connectAuth()];
+            case 3:
+                _a.sent();
+                return [2 /*return*/];
         }
     });
 }); };
-start();
+if (sessionStorage.getItem("not_hashed_password")) {
+    start();
+}
+else {
+    location.href = "login.html";
+}
 document.addEventListener("click", click);
 document.addEventListener("mouseover", mouseover);
 function click(event) {
@@ -121,28 +129,25 @@ function searchFilter(e) {
     return __awaiter(this, void 0, void 0, function () {
         var li, id, element, text;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (!(e.target.value == "start")) return [3 /*break*/, 2];
-                    return [4 /*yield*/, auth.getAuthUrl()];
-                case 1:
-                    _a.sent();
-                    _a.label = 2;
-                case 2:
-                    li = ul.getElementsByTagName('li');
-                    if (li.length > 0)
-                        for (id = 0; id < li.length; id++) {
-                            element = li[id];
-                            text = (auth.dataSystem.websites[id].url + auth.dataSystem.websites[id].name).toUpperCase();
-                            if (text.includes(e.target.value.toUpperCase())) {
-                                element.style.display = "";
-                            }
-                            else {
-                                element.style.display = "none";
-                            }
-                        }
-                    return [2 /*return*/];
-            }
+            li = ul.getElementsByTagName('li');
+            if (li.length > 0)
+                for (id = 0; id < li.length; id++) {
+                    element = li[id];
+                    text = (auth.dataSystem.websites[id].url + auth.dataSystem.websites[id].name).toUpperCase();
+                    if (text.includes(e.target.value.toUpperCase())) {
+                        element.style.display = "";
+                    }
+                    else {
+                        element.style.display = "none";
+                    }
+                }
+            return [2 /*return*/];
         });
     });
+}
+function getCookie(cname) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + cname + "=");
+    if (parts.length == 2)
+        return parts.pop().split(";").shift();
 }

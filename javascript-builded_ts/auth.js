@@ -37,23 +37,17 @@ var AuthSystem = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve) {
             var code = AuthSystem.getCode();
-            if (code == window.sessionStorage.getItem("codeAuth") && code) {
-                window.location.href = "/";
-                resolve(false);
-            }
-            else {
-                _this._dbxAuth.setCodeVerifier(window.sessionStorage.getItem('codeVerifier'));
-                _this._dbxAuth.getAccessTokenFromCode(_this._redirect_uri, code)
-                    .then(function (response) {
-                    _this._dbxAuth.setAccessToken(response.result.access_token);
-                    _this._dbx = new Dropbox.Dropbox({ auth: _this._dbxAuth });
-                    _this._data_system = new DataSystem(_this._dbx, _this._sync_dot);
-                    _this._data_system.startSync();
-                    window.sessionStorage.setItem("codeAuth", code);
-                    _this._sync_dot.color = "yellow";
-                    resolve(true);
-                }).catch(function (error) { _this._sync_dot.color = "red"; console.log(error); resolve(false); });
-            }
+            _this._dbxAuth.setCodeVerifier(window.sessionStorage.getItem('codeVerifier'));
+            _this._dbxAuth.getAccessTokenFromCode(_this._redirect_uri, code)
+                .then(function (response) {
+                _this._dbxAuth.setAccessToken(response.result.access_token);
+                _this._dbx = new Dropbox.Dropbox({ auth: _this._dbxAuth });
+                _this._data_system = new DataSystem(_this._dbx, _this._sync_dot);
+                _this._data_system.startSync();
+                window.sessionStorage.setItem("codeAuth", code);
+                _this._sync_dot.color = "yellow";
+                resolve(true);
+            }).catch(function (error) { _this._sync_dot.color = "red"; console.log(error); resolve(false); });
         });
     };
     Object.defineProperty(AuthSystem.prototype, "DataSystem", {

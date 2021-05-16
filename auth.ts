@@ -37,23 +37,18 @@ export class AuthSystem{
 
 	connectAuth(): Promise<boolean>{
 		return new Promise(resolve => {
-    	var code = AuthSystem.getCode();
-	    if (code == window.sessionStorage.getItem("codeAuth") && code){
-	    	window.location.href = "/";
-	        resolve(false);
-	    }else {
-	        this._dbxAuth.setCodeVerifier(window.sessionStorage.getItem('codeVerifier'));
-	        this._dbxAuth.getAccessTokenFromCode(this._redirect_uri, code)
-	        .then((response: { result: { access_token: any; }; }) => {
-	        	this._dbxAuth.setAccessToken(response.result.access_token);
-	            this._dbx = new Dropbox.Dropbox({ auth: this._dbxAuth });
-	            this._data_system = new DataSystem(this._dbx, this._sync_dot);
-	            this._data_system.startSync();
-	            window.sessionStorage.setItem("codeAuth", code);
-	            this._sync_dot.color = "yellow";
-	            resolve(true);
-	          }).catch((error: unknown) => {this._sync_dot.color = "red"; console.log(error); resolve(false);});
-	      }
+	    	var code = AuthSystem.getCode();
+			this._dbxAuth.setCodeVerifier(window.sessionStorage.getItem('codeVerifier'));
+			this._dbxAuth.getAccessTokenFromCode(this._redirect_uri, code)
+				.then((response: { result: { access_token: any; }; }) => {
+					this._dbxAuth.setAccessToken(response.result.access_token);
+					this._dbx = new Dropbox.Dropbox({ auth: this._dbxAuth });
+					this._data_system = new DataSystem(this._dbx, this._sync_dot);
+					this._data_system.startSync();
+					window.sessionStorage.setItem("codeAuth", code);
+					this._sync_dot.color = "yellow";
+					resolve(true);
+				}).catch((error: unknown) => { this._sync_dot.color = "red"; console.log(error); resolve(false); });
 	    });
 	}
 	public get DataSystem(){
