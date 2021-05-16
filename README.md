@@ -14,6 +14,10 @@ I don't have money. I chose Dropbox because it was ~~_secure_~~ and there was no
 
 My whole goal is to collect you poor guys f**king Facebook passwords 😳. Of course, you may not use it, and let FirstPass f*ck you.
 
+## How do I start server?
+
+You need the ```http-server```, npm package to start the server. 
+
 # Where can I donate to you?
 
 I don't think my projects are that good right now 😭
