@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var CLIENT_ID = "ncss4bzotoyi4zm"; //This is my Dropbox Public App key. Please do not abuse this.
-var REDIRECT_URI = "http://localhost:8080";
+var REDIRECT_URI = "http://localhost:8080/pages";
 import { AuthSystem } from "./auth.js";
 import { Website } from "./data.js";
 var auth = new AuthSystem(CLIENT_ID, REDIRECT_URI);

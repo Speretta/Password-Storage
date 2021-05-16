@@ -1,0 +1,92 @@
+#passPopUp{
+  position: fixed;
+  padding: 0;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 250px;
+  height: 180px;
+  top: 100px;
+  display: none;
+  background-color: white;
+  z-index: 4; 
+  border-radius: 10px;
+}
+
+#popupButton{
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  z-index: 1;
+  background-color: white;
+  border: 0;
+  border-radius: 3px;
+}
+
+#popupButton:hover {
+  background-color: gray;
+}
+
+
+.passInput{
+  margin-top: 5px;
+  padding: 0;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 200px;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#passTitleDiv{
+  background-color: #3bd9dc;
+  position: absolute;
+  height: 60px;
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+#passName{
+  border: 0;
+  font-size: 18pt;
+  width: 155px;
+  background: transparent;
+  display: inline-block;
+  position: absolute;
+  top: 8px;
+}
+#passImgDiv{
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  float: left;
+}
+
+#passInputDiv{
+  top: 70px;
+  position: relative;
+}
+
+#passSaveDiv{
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  bottom: 5px;
+}
+
+#passSaveButton{
+  border: none;
+  background-color: #3bd9dc;
+  border-radius: 5px;
+  width: 80px;
+  height: 25px;
+  font-size: 14px;
+}
+
+#passSaveButton:hover{
+  background-color: #00cfff;
+}

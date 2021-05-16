@@ -18,7 +18,6 @@ var AuthSystem = /** @class */ (function () {
                     window.sessionStorage.setItem("codeVerifier", "");
                     window.sessionStorage.setItem("codeVerifier", _this._dbxAuth.codeVerifier);
                     window.location.href = authUrl;
-                    console.log(authUrl);
                     _this._sync_dot.color = "yellow";
                     resolve(true);
                 })

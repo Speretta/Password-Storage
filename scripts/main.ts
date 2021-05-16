@@ -1,5 +1,5 @@
 const CLIENT_ID = "ncss4bzotoyi4zm"; //This is my Dropbox Public App key. Please do not abuse this.
-const REDIRECT_URI = "http://localhost:8080";
+const REDIRECT_URI = "http://localhost:8080/pages";
 
 import { AuthSystem } from "./auth.js";
 import { checkImgAndSet } from "./weblist.js";

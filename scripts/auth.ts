@@ -20,7 +20,6 @@ export class AuthSystem{
 		          window.sessionStorage.setItem("codeVerifier", "");
 		          window.sessionStorage.setItem("codeVerifier", this._dbxAuth.codeVerifier);
 		          window.location.href = authUrl;
-		          console.log(authUrl);
 		          this._sync_dot.color = "yellow";
 		          resolve(true);
 		        })
